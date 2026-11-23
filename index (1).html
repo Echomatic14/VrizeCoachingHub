@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Coaching Hub — Fortnite coaching and tournament preparation with VrizeFN.">
+  <title>Coaching Hub | Fortnite Coaching</title>
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --panel: #171719;
+      --panel-2: #242426;
+      --text: #f5f5f5;
+      --muted: #a6a6aa;
+      --accent: #e5e5e5;
+      --line: rgba(255,255,255,.11);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(16,17,20,.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.4px; }
+    .brand img { width: 43px; height: 38px; object-fit: contain; }
+    .brand span { font-size: 17px; }
+    .nav-links { display: flex; align-items: center; gap: 25px; color: #d0d1d5; font-size: 14px; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta, .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 0; border-radius: 9px; padding: 11px 17px;
+      background: var(--accent); color: #111111; font-weight: 800;
+      cursor: pointer; transition: transform .18s ease, opacity .18s ease;
+    }
+    .nav-cta:hover, .btn:hover { transform: translateY(-2px); }
+    .btn.secondary { background: transparent; border: 1px solid rgba(255,255,255,.4); color: white; }
+    .hero {
+      min-height: 570px; display: flex; align-items: center;
+      background:
+        linear-gradient(90deg, rgba(10,12,16,.94) 0%, rgba(10,12,16,.78) 48%, rgba(10,12,16,.25) 100%),
+        url("assets/fortnite-street.png") center/cover no-repeat;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-copy { max-width: 620px; padding: 85px 0; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 2px; }
+    h1 { font-size: clamp(42px, 7vw, 76px); line-height: .99; letter-spacing: -3px; margin: 16px 0 20px; }
+    .hero p { max-width: 540px; color: #d0d1d5; font-size: 17px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    section { padding: 82px 0; }
+    .section-head { max-width: 650px; margin-bottom: 32px; }
+    .section-head h2 { font-size: clamp(29px, 4vw, 42px); line-height: 1.1; margin: 8px 0 12px; letter-spacing: -1.2px; }
+    .section-head p, .muted { color: var(--muted); }
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: stretch; }
+    .about-photo {
+      min-height: 330px; border-radius: var(--radius); overflow: hidden;
+      background: url("assets/fortnite-coast.png") center/cover no-repeat;
+      border: 1px solid var(--line);
+    }
+    .about-card, .price-card, .account-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
+    }
+    .about-card h3 { font-size: 24px; margin: 0 0 12px; }
+    .price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .price-card { display: flex; flex-direction: column; min-height: 245px; }
+    .price-card.featured { border-color: rgba(255,255,255,.45); }
+    .price { font-size: 42px; font-weight: 800; letter-spacing: -2px; margin: 12px 0; }
+    .price small { font-size: 15px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+    .price-card p { color: var(--muted); margin: 0 0 22px; }
+    .price-card .btn { margin-top: auto; align-self: flex-start; }
+    .account-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 25px; align-items: start; }
+    .account-card h3 { margin: 0 0 8px; font-size: 22px; }
+    .field { margin-top: 17px; }
+    label { display: block; color: #d9d9dd; font-size: 13px; font-weight: 700; margin-bottom: 7px; }
+    input[type="text"] {
+      width: 100%; padding: 13px 14px; border-radius: 9px;
+      color: white; background: #101216; border: 1px solid var(--line); outline: none;
+    }
+    input:focus { border-color: var(--accent); }
+    input[type="file"] { color: var(--muted); max-width: 100%; }
+    .profile-preview { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+    .avatar {
+      width: 58px; height: 58px; border-radius: 50%; object-fit: cover;
+      background: #30343c; border: 1px solid var(--line);
+      display: grid; place-items: center; color: var(--muted); font-size: 22px;
+    }
+    .profile-status { color: var(--muted); font-size: 13px; }
+    .note { font-size: 12px; color: var(--muted); margin-top: 15px; }
+    .discord {
+      background: linear-gradient(110deg, rgba(12,14,18,.96), rgba(12,14,18,.72)),
+        url("assets/fortnite-coast.png") center/cover no-repeat;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    }
+    .discord-inner { display: flex; align-items: center; justify-content: space-between; gap: 25px; }
+    .discord h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 8px; }
+    .discord p { color: #c2c4ca; margin: 0; }
+    footer { padding: 25px 0; color: var(--muted); font-size: 13px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    .message { margin-top: 14px; color: var(--accent); font-size: 14px; min-height: 22px; }
+    @media (max-width: 760px) {
+      .nav { flex-wrap: wrap; padding: 13px 0; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; gap: 12px; font-size: 13px; }
+      .nav-cta { margin-left: auto; }
+      .hero { min-height: 520px; background-position: 57% center; }
+      .about-grid, .account-grid, .price-grid { grid-template-columns: 1fr; }
+      .about-photo { min-height: 240px; }
+      section { padding: 62px 0; }
+      .discord-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="Coaching Hub home">
+        <img src="assets/coaching-hub-logo.png" alt="Coaching Hub logo">
+        <span>COACHING HUB</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#sessions">Sessions</a>
+        <a href="#account">Account</a>
+      </nav>
+      <a class="nav-cta" href="https://discord.gg/zEXFR9Y3F5" target="_blank" rel="noopener">Join Discord</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="hero-copy">
+          <div class="eyebrow">Fortnite coaching • by VrizeFN</div>
+          <h1>Play smarter.<br>Get better.</h1>
+          <p>Want to improve at Fortnite? Coaching Hub is a place to work on your gameplay, build better habits and prepare for tournaments — without spending a fortune.</p>
+          <div class="actions">
+            <a class="btn" href="https://discord.gg/zEXFR9Y3F5" target="_blank" rel="noopener">Book through Discord</a>
+            <a class="btn secondary" href="#sessions">View sessions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">About Coaching Hub</div>
+          <h2>Useful advice. Real practice.</h2>
+          <p>Coaching Hub is run by VrizeFN and is focused on helping Fortnite players understand what to improve and how to practise it.</p>
+        </div>
+        <div class="about-grid">
+          <div class="about-photo" role="img" aria-label="Fortnite coastal location"></div>
+          <div class="about-card">
+            <h3>Build your game, one session at a time.</h3>
+            <p class="muted">Whether you're getting ready for a tournament or just want to feel more confident in your matches, sessions are designed around improving your decision-making and gameplay.</p>
+            <p class="muted">To arrange a time, ask questions or check availability, join the Discord server. VrizeFN can help you figure out which session suits your goal.</p>
+            <a class="btn" href="https://discord.gg/zEXFR9Y3F5" target="_blank" rel="noopener">Talk to us on Discord</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sessions">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Coaching options</div>
+          <h2>Pick the session that works for you.</h2>
+          <p>Choose a session below, then message us in Discord to arrange the details.</p>
+        </div>
+        <div class="price-grid">
+          <article class="price-card">
+            <div class="eyebrow">Tournament preparation</div>
+            <div class="price">£10</div>
+            <p>Focused coaching to help you prepare for tournament play and make better decisions under pressure.</p>
+            <a class="btn" href="https://discord.gg/zEXFR9Y3F5" target="_blank" rel="noopener">Book tournament coaching</a>
+          </article>
+          <article class="price-card featured">
+            <div class="eyebrow">Two-hour session</div>
+            <div class="price">£7 <small>/ 2 hours</small></div>
+            <p>A longer session to review your gameplay, work on weak points and practise at your own pace.</p>
+            <a class="btn" href="https://discord.gg/zEXFR9Y3F5" target="_blank" rel="noopener">Book a 2-hour session</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="account">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Your profile</div>
+          <h2>Create a Coaching Hub profile.</h2>
+          <p>Choose a username and profile picture to personalise this page on your device.</p>
+        </div>
+        <div class="account-grid">
+          <div class="account-card">
+            <h3>Make your profile</h3>
+            <p class="muted">No password or private details needed for this demo profile.</p>
+            <form id="profileForm">
+              <div class="field">
+                <label for="username">Username</label>
+                <input id="username" type="text" maxlength="20" placeholder="Choose a username" required>
+              </div>
+              <div class="field">
+                <label for="avatarInput">Profile picture (optional)</label>
+                <input id="avatarInput" type="file" accept="image/*">
+              </div>
+              <div class="profile-preview">
+                <img id="avatarPreview" class="avatar" alt="Profile picture preview" hidden>
+                <div id="avatarFallback" class="avatar">?</div>
+                <div>
+                  <strong id="previewName">Your username</strong>
+                  <div class="profile-status">Profile preview</div>
+                </div>
+              </div>
+              <div class="field">
+                <button class="btn" type="submit">Save profile on this device</button>
+              </div>
+              <div class="message" id="profileMessage" aria-live="polite"></div>
+            </form>
+          </div>
+          <div class="account-card">
+            <h3>Already made a profile?</h3>
+            <p class="muted">Your demo profile is saved only in this browser on this device. It won't sync to other devices and it isn't a full login account.</p>
+            <button class="btn secondary" id="clearProfile" type="button">Clear this device's profile</button>
+            <p class="note">For secure accounts with passwords, sign-in and cross-device profiles, Coaching Hub would need a connected backend and database. Don't enter passwords or sensitive information into this demo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="discord">
+      <div class="wrap discord-inner">
+        <div>
+          <div class="eyebrow">Ready to get started?</div>
+          <h2>Book your session in Discord.</h2>
+          <p>Join the server to ask about availability and arrange your coaching.</p>
+        </div>
+        <a class="btn" href="https://discord.gg/zEXFR9Y3F5" target="_blank" rel="noopener">Join Coaching Hub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Coaching Hub</span>
+      <span>Fortnite coaching by VrizeFN</span>
+    </div>
+  </footer>
+
+  <script>
+    const usernameInput = document.getElementById('username');
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+    const avatarFallback = document.getElementById('avatarFallback');
+    const previewName = document.getElementById('previewName');
+    const profileMessage = document.getElementById('profileMessage');
+    let selectedAvatar = '';
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    usernameInput.addEventListener('input', () => {
+      previewName.textContent = usernameInput.value.trim() || 'Your username';
+    });
+
+    avatarInput.addEventListener('change', () => {
+      const file = avatarInput.files && avatarInput.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        profileMessage.textContent = 'Please choose an image file.';
+        avatarInput.value = '';
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        profileMessage.textContent = 'Please choose an image under 2 MB.';
+        avatarInput.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        selectedAvatar = reader.result;
+        avatarPreview.src = selectedAvatar;
+        avatarPreview.hidden = false;
+        avatarFallback.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function loadProfile() {
+      try {
+        const profile = JSON.parse(localStorage.getItem('coachingHubProfile') || 'null');
+        if (!profile) return;
+        usernameInput.value = profile.username || '';
+        previewName.textContent = profile.username || 'Your username';
+        if (profile.avatar) {
+          selectedAvatar = profile.avatar;
+          avatarPreview.src = profile.avatar;
+          avatarPreview.hidden = false;
+          avatarFallback.style.display = 'none';
+        }
+        profileMessage.textContent = 'Your profile is saved on this device.';
+      } catch {
+        profileMessage.textContent = 'Could not load the saved profile.';
+      }
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const username = usernameInput.value.trim();
+      if (!username) {
+        profileMessage.textContent = 'Please choose a username first.';
+        return;
+      }
+      try {
+        localStorage.setItem('coachingHubProfile', JSON.stringify({
+          username,
+          avatar: selectedAvatar
+        }));
+        profileMessage.textContent = 'Profile saved on this device.';
+      } catch {
+        profileMessage.textContent = 'Could not save that profile. Try a smaller picture.';
+      }
+    });
+
+    document.getElementById('clearProfile').addEventListener('click', () => {
+      localStorage.removeItem('coachingHubProfile');
+      usernameInput.value = '';
+      previewName.textContent = 'Your username';
+      selectedAvatar = '';
+      avatarPreview.removeAttribute('src');
+      avatarPreview.hidden = true;
+      avatarFallback.style.display = 'grid';
+      avatarInput.value = '';
+      profileMessage.textContent = 'Profile cleared from this device.';
+    });
+
+    loadProfile();
+  </script>
+</body>
+</html>
